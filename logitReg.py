@@ -75,8 +75,6 @@ class LogitReg(object):
 
     def __init__(self,alpha,lamda,iterations):
 
-
-
         # Weight decay. Affect regulation term.
         # Smaller number means stronger regulations
         self.lamda = lamda
@@ -228,10 +226,10 @@ class LogitReg(object):
 
         else:
             thershold = 0.5
-            hypothesis = sigmoid(np.dot(X,self.thetas_))
+            hypothesis = sigmoid(np.dot(X,self.theta_))
             # if h > thershold, assign to class 1, to class 0 otherwise
             # add zero to return a 1/0 array instead of boolean array
-            return 0 + hypothesis >= thershold
+            return 0 + (hypothesis >= thershold)
 
     def predict(self,X, one_v_all=False):
         """
@@ -240,10 +238,6 @@ class LogitReg(object):
         :return:
          m_sample array labels
         """
-        # try:
-        #     theta_opt = self.theta_
-        # except:
-        #     theta_opt= self.thetas_
 
         #hypothesis = self._hypothesis(X,theta_opt)
         prediction = self.decision_function(X, one_v_all)
@@ -266,7 +260,7 @@ def calcCorrect(prediction, target):
 
     comparison = 0+(prediction ==target)
     print comparison
-    return float(sum(comparison)) / float(len(prediction))
+    return float(sum(comparison)) / len(prediction)
 
 
 #TODO: assign csvfile of train data
